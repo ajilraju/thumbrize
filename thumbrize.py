@@ -36,25 +36,25 @@ def find_files(input):
                 filenames.append(os.path.join(root, file))
     return filenames
 
-def main(argv=None):
+def main():
 
     parser = argparse.ArgumentParser(description='Tool for image resize')
     parser.add_argument(
-        '-i',
+        '-i', '--input',
         metavar='input file',
         required=True,
-        help='input files for converting a thumbnail.')
+        help='input files for converting a image.')
     parser.add_argument(
-        '-o',
+        '-o', '--output',
         metavar='out file',
         required=True,
-        help='out file or directory to save the thumbnails')
+        help='target location | file to save')
     parser.add_argument(
-        '-s',
+        '-s', '--size',
         metavar='size',
         type=int,
         required=True,
-        help='size of the thumbnails')
+        help='size of the image')
     args = parser.parse_args(argv)
     create_thumbnail(args.i, args.s, args.o)
 
