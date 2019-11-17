@@ -1,4 +1,8 @@
 # Thumbrize
 small utility used for resize the image
 
-[usage](./docs/USAGE.md)
+## Usage [future]
+
+```bash
+thumbrize [options]... INUPUT FILES... 
+
