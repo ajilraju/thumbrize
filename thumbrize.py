@@ -4,7 +4,7 @@
 import argparse
 import os
 from PIL import Image
-
+ap = argparse.ArgumentParser()
 SUFFIX = '_thumbnail'
 
 def create_thumbnail(input, size, output='.'):
@@ -55,7 +55,8 @@ def main():
         type=int,
         required=True,
         help='size of the image')
-    args = parser.parse_args(argv)
+    #args = parser.parse_args(argv)
+    args = vars(ap.parse_args())
     create_thumbnail(args.i, args.s, args.o)
 
 if __name__ == '__main__':  
