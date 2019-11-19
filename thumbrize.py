@@ -4,15 +4,17 @@
 import argparse
 import os
 from PIL import Image
-ap = argparse.ArgumentParser()
+
 SUFFIX = '_thumbnail'
 
-def create_thumbnail(input, size, output='.'):
+def create_thumbnail(infile, size, output, recur=False):
+
     MAX_SIZE = (size, size)
-    images_files = find_files(input) # routines to find all files in the directory.
+    images_files = find_files(infile) # routines to find all files in the directory.
     for infile in images_files:
         extension = ''
         file, extension = os.path.splitext(infile)
+        if output != None: file = output
         # condition to convert the jpg (MS-DOS 8.3 and FAT-16 file system)
         # file formt to JPEG.
         if extension == '.jpg':
@@ -28,9 +30,9 @@ def create_thumbnail(input, size, output='.'):
 
 # routines find the specified images format file from the mentioned
 # directory packed into a list
-def find_files(input):
+def find_files(insource):
     filenames = []
-    for root, _, files in os.walk(input):
+    for root, _, files in os.walk(insource):
         for file in files:
             if file.endswith('.jpg') or file.endswith('.png'):
                 filenames.append(os.path.join(root, file))
@@ -38,26 +40,26 @@ def find_files(input):
 
 def main():
 
+    pwd = os.getcwd()
+    
     parser = argparse.ArgumentParser(description='Tool for image resize')
-    parser.add_argument(
-        '-i', '--input',
-        metavar='input file',
-        required=True,
-        help='input files for converting a image.')
-    parser.add_argument(
-        '-o', '--output',
-        metavar='out file',
-        required=True,
-        help='target location | file to save')
-    parser.add_argument(
-        '-s', '--size',
-        metavar='size',
-        type=int,
-        required=True,
-        help='size of the image')
-    #args = parser.parse_args(argv)
-    args = vars(ap.parse_args())
-    create_thumbnail(args.i, args.s, args.o)
+    parser.add_argument('infile',
+                        help='File for the resize')
+    parser.add_argument('size',
+                        type=int,
+                        help='Image resizing scale factor')
+    parser.add_argument('-o',
+                        '--outfile',
+                        default=pwd,
+                        help='To store the resized images')
+    parser.add_argument('-r',
+                        '--recursive',
+                        action='store_true',
+                        help='Iterate over the entire directory')
+                        
+    args = parser.parse_args()
+    create_thumbnail(args.infile, args.size, \
+                        args.outfile, args.recursive)
 
 if __name__ == '__main__':  
     main()
