@@ -5,15 +5,13 @@ Created on Wed Nov 20 13:15:25 2019
 
 @author: jerald
 """
+from Resize import resize
+p1=resize.ResizeFile()
 def Run(argument):
-    switcher = {
-        1: "resize the image",
-        2: "crop the image ",
-        3: "reduce the resulution ",
-        4: "resuze the size( compress)",
-    }
-    return switcher.get(argument, "this package is not suitable for your selected option try another")
-
+    if(argument==1):
+         p1.getValue()
+    elif(argument!=1):
+        print("this package is under maintenance")
 
 if __name__ == "__main__":
     print("1.resize the image")
@@ -21,4 +19,4 @@ if __name__ == "__main__":
     print("3.reduce the resulution")
     print("4.resuze the size( compress)")
     argument = int(input("enter your choise\n"))
-    print (Run(argument))
+    Run(argument)
