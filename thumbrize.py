@@ -42,6 +42,7 @@ def main():
 
     pwd = os.getcwd()
     
+    
     parser = argparse.ArgumentParser(description='Tool for image resize')
     parser.add_argument('infile',
                         help='File for the resize')
