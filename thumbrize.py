@@ -4,6 +4,7 @@
 import argparse
 import os
 from PIL import Image
+import sys
 
 SUFFIX = '_thumbnail'
 
@@ -32,17 +33,23 @@ def create_thumbnail(infile, size, output, recur=False):
 # directory packed into a list
 def find_files(insource):
     filenames = []
-    for root, _, files in os.walk(insource):
-        for file in files:
-            if file.endswith('.jpg') or file.endswith('.png'):
-                filenames.append(os.path.join(root, file))
-    return filenames
+    content = os.path.abspath(insource)
+    if not os.path.exists(content):
+        print("File Not found")
+        sys.exit(1)
+    else:
+        if os.path.isfile(content):
+            return filenames
+        else:
+            for root, _, files in os.walk(insource):
+                for file in files:
+                    if file.endswith('.jpg') or file.endswith('.png'):
+                        filenames.append(os.path.join(root, file))
+            return filenames
 
 def main():
 
-    pwd = os.getcwd()
-    
-    
+    current_dir = os.getcwd()   
     parser = argparse.ArgumentParser(description='Tool for image resize')
     parser.add_argument('infile',
                         help='File for the resize')
@@ -51,7 +58,7 @@ def main():
                         help='Image resizing scale factor')
     parser.add_argument('-o',
                         '--outfile',
-                        default=pwd,
+                        default=current_dir,
                         help='To store the resized images')
     parser.add_argument('-r',
                         '--recursive',
