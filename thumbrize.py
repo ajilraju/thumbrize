@@ -40,16 +40,13 @@ class FileFinder(object):
         filenames = []
         content = os.path.abspath(self.infile)
         if not os.path.exists(content):
-            print(content)
             print("File Not found")
             sys.exit(1)
         else:
-            print(content)
             if os.path.isfile(content):
-                return content
-                
+                return content             
             else:
-                for root, _, files in os.walk(insource):
+                for root, _, files in os.walk(content):
                     for file in files:
                         if file.endswith('.jpg') or file.endswith('.png'):
                             filenames.append(os.path.join(root, file))
