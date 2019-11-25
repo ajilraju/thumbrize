@@ -31,8 +31,7 @@ def create_thumbnail(infile, size, output, recur=False):
 
 class FileFinder(object):
     """Find the files the in the mentioned directory and also return the
-       details about the implicit pointed files in the filesystem.""""
-
+    details about the implicit pointed files in the filesystem."""
     def __init__(self, infile):
         self.infile = infile
         
@@ -41,11 +40,14 @@ class FileFinder(object):
         filenames = []
         content = os.path.abspath(self.infile)
         if not os.path.exists(content):
+            print(content)
             print("File Not found")
             sys.exit(1)
         else:
+            print(content)
             if os.path.isfile(content):
                 return content
+                
             else:
                 for root, _, files in os.walk(insource):
                     for file in files:

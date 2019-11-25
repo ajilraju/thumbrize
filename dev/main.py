@@ -9,7 +9,9 @@ from Resize import resize
 p1=resize.ResizeFile()
 def Run(argument):
     if(argument==1):
-         p1.getValue()
+        p1.getValue()
+    elif(argument==2):
+        p1.getImage
     elif(argument!=1):
         print("this package is under maintenance")
 
@@ -18,5 +20,6 @@ if __name__ == "__main__":
     print("2.crop the image")
     print("3.reduce the resulution")
     print("4.resuze the size( compress)")
-    argument = int(input("enter your choise\n"))
+    arg = (input("enter yo1ur choise\n"))
+    argument=int(arg[0])
     Run(argument)
