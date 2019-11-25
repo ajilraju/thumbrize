@@ -3,6 +3,7 @@
 
 import argparse
 import os
+import sys
 from PIL import Image
 
 SUFFIX = '_thumbnail'
@@ -10,8 +11,8 @@ SUFFIX = '_thumbnail'
 def create_thumbnail(infile, size, output, recur=False):
 
     MAX_SIZE = (size, size)
-    images_files = find_files(infile) # routines to find all files in the directory.
-    for infile in images_files:
+    imgfile = FileFinder(infile).find_files()
+    for infile in imgfile:
         extension = ''
         file, extension = os.path.splitext(infile)
         if output != None: file = output
@@ -28,21 +29,35 @@ def create_thumbnail(infile, size, output, recur=False):
             # to save the JPEG images as thumbnails.
             im.save(file + SUFFIX, extension.upper(), quality=80)
 
-# routines find the specified images format file from the mentioned
-# directory packed into a list
-def find_files(insource):
-    filenames = []
-    for root, _, files in os.walk(insource):
-        for file in files:
-            if file.endswith('.jpg') or file.endswith('.png'):
-                filenames.append(os.path.join(root, file))
-    return filenames
+class FileFinder(object):
+    """Find the files the in the mentioned directory and also return the
+    details about the implicit pointed files in the filesystem."""
+    def __init__(self, infile):
+        self.infile = infile
+        
+    def find_files(self):
+        """Return the files absolute path from the input"""
+        filenames = []
+        content = os.path.abspath(self.infile)
+        if not os.path.exists(content):
+            print(content)
+            print("File Not found")
+            sys.exit(1)
+        else:
+            print(content)
+            if os.path.isfile(content):
+                return content
+                
+            else:
+                for root, _, files in os.walk(insource):
+                    for file in files:
+                        if file.endswith('.jpg') or file.endswith('.png'):
+                            filenames.append(os.path.join(root, file))
+                return filenames
 
 def main():
 
-    pwd = os.getcwd()
-    
-    
+    current_dir = os.getcwd()   
     parser = argparse.ArgumentParser(description='Tool for image resize')
     parser.add_argument('infile',
                         help='File for the resize')
@@ -51,7 +66,7 @@ def main():
                         help='Image resizing scale factor')
     parser.add_argument('-o',
                         '--outfile',
-                        default=pwd,
+                        default=current_dir,
                         help='To store the resized images')
     parser.add_argument('-r',
                         '--recursive',

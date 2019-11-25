@@ -5,6 +5,8 @@ Created on Wed Nov 20 14:22:55 2019
 
 @author: jerald
 """
+import os
+from PIL import Image
 # resize the image
 class ResizeFile:
     
@@ -19,6 +21,7 @@ class ResizeFile:
         resizeFactor=input("resize factor") 
         self.filePath=filePath
         self.resizeFactor=resizeFactor
-        print(filePath)
         print(resizeFactor)
-
+        ap=Image(filename='/home/jerald/Pictures/one.jpg')
+        ap._show()
+        
