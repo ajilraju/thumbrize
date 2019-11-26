@@ -4,6 +4,7 @@
 import argparse
 import os
 import sys
+from os.path import splitext
 from PIL import Image
 
 SUFFIX = '_thumbnail'
@@ -13,9 +14,12 @@ def create_thumbnail(infile, size, output, recur=False):
     MAX_SIZE = (size, size)
     imgfile = FileFinder(infile).find_files()
     #imgfile is used to store the image address
-    #the image is valid then displya it
+    #if the image is valid then displya it
     #example parameter "directory full name" 50
     read_image_file = Image.open(imgfile)
+    file_name,extension = splitext(imgfile)
+    #get the file extension
+    print(extension)
     read_image_file.show()
     read_image_file.convert('RGB').save("image_name.jpg","JPEG")
     for infile in imgfile:
