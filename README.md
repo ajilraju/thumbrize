@@ -1,5 +1,5 @@
 # Thumbrize
-small utility used for resize the image
+small utility used for resize and reduce the images.
 
 ## Usage [future]
 
