@@ -12,6 +12,12 @@ def create_thumbnail(infile, size, output, recur=False):
 
     MAX_SIZE = (size, size)
     imgfile = FileFinder(infile).find_files()
+    #imgfile is used to store the image address
+    #the image is valid then displya it
+    #example parameter "directory full name" 50
+    read_image_file = Image.open(imgfile)
+    read_image_file.show()
+    read_image_file.convert('RGB').save("image_name.jpg","JPEG")
     for infile in imgfile:
         extension = ''
         file, extension = os.path.splitext(infile)
@@ -21,6 +27,7 @@ def create_thumbnail(infile, size, output, recur=False):
         if extension == '.jpg':
             extension = 'JPEG'
         im = Image.open(infile)
+        im.show()
         im.thumbnail(MAX_SIZE)
         if extension == '.png':
             # to save the png images as thumbnails.
@@ -40,13 +47,16 @@ class FileFinder(object):
         filenames = []
         content = os.path.abspath(self.infile)
         if not os.path.exists(content):
+            print(content)
             print("File Not found")
             sys.exit(1)
         else:
+            print(content)
             if os.path.isfile(content):
-                return content             
+                return content
+                
             else:
-                for root, _, files in os.walk(content):
+                for root, _, files in os.walk(insource):
                     for file in files:
                         if file.endswith('.jpg') or file.endswith('.png'):
                             filenames.append(os.path.join(root, file))
